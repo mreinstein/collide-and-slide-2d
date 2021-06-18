@@ -1,6 +1,9 @@
 # collide-and-slide-2d
 slide an ellipse/sphere along a series of line segments in 2d
 
+https://user-images.githubusercontent.com/718067/122616942-37590f80-d040-11eb-8038-438310cb74bd.mov
+
+
 ## why?
 
 Lately I've been making some 2d platformers in javascript, and while there are practically endless resources for tile-based games, there is very little high quality material for collision detection and response between spheres/ellipsoids and 2d line segments. Allow me to qualify "high quality":
