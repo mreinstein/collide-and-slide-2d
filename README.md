@@ -6,7 +6,7 @@ https://user-images.githubusercontent.com/718067/122616942-37590f80-d040-11eb-80
 
 ## why?
 
-Lately I've been making some 2d platformers in javascript, and while there are practically endless resources for tile-based games, there is very little high quality material for collision detection and response between spheres/ellipsoids and 2d line segments. Allow me to qualify "high quality":
+Lately I've been making some 2d platformers in javascript, and while there are practically endless resources for tile-based games, there is very little high quality material for collision detection and response between spheres/ellipsoids and 2d line segments. What is "high quality"?:
 * handles sliding along planes
 * provides robust contact details on collisions
 * **does not leak memory**
@@ -33,7 +33,7 @@ Three in particular are worth explaining a little more:
 * `lineCount` is the number of entries to use in the `indices` array. For example, if `indices === [ 2, 7, 19, 36 ]` and `lineCount === 3` then only the first 3 items from `indices` will be used in calculating the collisions.
 
 
-**This API may seem clunky, but it's an intentional design decision because it means you can perform collisions in a tight simulation/game loop with purely preallocated memory.**
+**This API may seem clunky at first, but it's an intentional design decision because it enables collision handling in a tight simulation/game loop with memory preallocated ahead of time.**
 
 
 
@@ -65,7 +65,7 @@ const lineCount = 2 // how many items in the indices array to include when colli
 const out = vec2.create()
 
 
-const position = vec2.fromValues(50, 200) // current position of ellipsoid
+const position = vec2.fromValues(50, 200) // current position of ellipsoid (center)
 const ellipsoidRadius = [ 5, 10 ]         // the width and height radius of the ellipsoid
 const moveVel = vec2.fromValues(10, 0)    // the horizontal movement velocity is 10 right
 const gravityVel = vec2.fromValues(0, 6)  // the vertical (gravity) velocity is 6 down
@@ -89,7 +89,7 @@ if (collided)
 
 // if no collision the entity is moved the full distance specified by gravity and move velocities.
 // if collision, it will move and slide along any lines included in the lines list.
-// either way, "out" will have this updated position.
+// either way, "out" will have this updated position (the ellipsoid's center point.)
 console.log('new position:', out)
 
 ```
