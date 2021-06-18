@@ -20,6 +20,9 @@ Lately I've been making some 2d platformers in javascript, and while there are p
 So here we are.
 
 
+Note: this is a fairly high level collision response function. If you're looking for low level 2d collision tests, check out https://github.com/mreinstein/collision-2d
+
+
 ## usage
 
 This API may seem very odd at first glance, there are many arguments to this function.
@@ -96,3 +99,4 @@ console.log('new position:', out)
 
 This code is a re-implementation of Kasper Fauerby's incredible work: http://www.peroxide.dk/papers/collision/collision.pdf
 
+The matrix and vector operations are standardized on Brandon Jone's most excellent https://glmatrix.net/ 
