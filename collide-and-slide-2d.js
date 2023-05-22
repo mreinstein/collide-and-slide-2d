@@ -62,7 +62,7 @@ export default function collideAndSlide (
 
 
 function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipsoid, vel, collisionRecursionDepth = 0) {
-    if (collisionRecursionDepth > MAX_RECURSION_DEPTH) {
+    if (vec2.length(vel) === 0 || collisionRecursionDepth > MAX_RECURSION_DEPTH) {
         vec2.copy(out, pos)
         return
     }
