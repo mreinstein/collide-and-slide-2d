@@ -1,6 +1,5 @@
-import Pool           from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap/pool.js'
 import { vec2 }       from 'https://cdn.skypack.dev/pin/gl-matrix@v3.4.3-OSmwlRYK5GW1unkuAQkN/mode=imports,min/optimized/gl-matrix.js'
-import segmentsEllipsoid1Indexed from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/segments-ellipsoid-sweep1-indexed.js'
+import segmentsEllipsoid1Indexed from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d@9a48908b428204c42/src/segments-ellipsoid-sweep1-indexed.js'
 import contact        from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
 import copyContact    from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
 import plane          from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/plane.js'
@@ -12,6 +11,14 @@ const VERY_CLOSE_DISTANCE = 0.005
 const MAX_RECURSION_DEPTH = 5
 
 const tmpContact = contact()
+const eSpacePosition = vec2.create()
+const eSpaceVelocity = vec2.create()
+const destinationPoint = vec2.create()
+const newBasePoint = vec2.create()
+const V = vec2.create()
+const slidePlaneNormal = vec2.create()
+const newDestinationPoint = vec2.create()
+const newVelocityVector = vec2.create()
 
 
 // collision detection/resolution
@@ -37,8 +44,8 @@ export default function collideAndSlide (
     contact
 ) {
     // convert position and movement velocity from R3 to ellipsoid space
-    const eSpacePosition = vec2.divide(Pool.malloc(), position, ellipsoid)
-    const eSpaceVelocity = vec2.divide(Pool.malloc(), moveVel, ellipsoid)
+    vec2.divide(eSpacePosition, position, ellipsoid)
+    vec2.divide(eSpaceVelocity, moveVel, ellipsoid)
 
     // reset the contact object. null means no collision
     contact.collider = -1
@@ -53,9 +60,6 @@ export default function collideAndSlide (
 
     // Convert final result back from ellipsoid space back to R3:
     vec2.multiply(out, out, ellipsoid)
-
-    Pool.free(eSpacePosition)
-    Pool.free(eSpaceVelocity)
 
     return contact.collider >= 0
 }
@@ -76,14 +80,14 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     }
 
     // find the point of desired final location of the entity
-    const destinationPoint = vec2.add(Pool.malloc(), pos, vel)
-    const newBasePoint = vec2.copy(Pool.malloc(), pos)
+    vec2.add(destinationPoint, pos, vel)
+    vec2.copy(newBasePoint, pos)
 
     // only update if we are not already very close and if so, we only
     // move very close to the intersection, not the exact spot.
     const movementDistance = vec2.length(vel) * tmpContact.time
     if (movementDistance >= VERY_CLOSE_DISTANCE) {
-        const V = vec2SetLength(Pool.malloc(), vel, movementDistance - VERY_CLOSE_DISTANCE)
+        vec2SetLength(V, vel, movementDistance - VERY_CLOSE_DISTANCE)
 
         vec2.add(newBasePoint, pos, V)
 
@@ -92,8 +96,6 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
         vec2.normalize(V, V)
         vec2.scale(V, V, VERY_CLOSE_DISTANCE)
         vec2.subtract(tmpContact.position, tmpContact.position, V)
-
-        Pool.free(V)
     }
 
     copyContact(contact, tmpContact)
@@ -103,21 +105,21 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     // project the destination point onto the sliding plane
     const slidePlaneOrigin = tmpContact.position
 
-    const slidePlaneNormal = vec2.subtract(Pool.malloc(), newBasePoint, tmpContact.position)
+    vec2.subtract(slidePlaneNormal, newBasePoint, tmpContact.position)
     vec2.normalize(slidePlaneNormal, slidePlaneNormal)
 
     const slidingPlane = plane.fromPlane(plane.create(), slidePlaneOrigin, slidePlaneNormal)
     const planeDistance = plane.signedDistanceTo(slidingPlane, destinationPoint)
 
-    const newDestinationPoint = vec2.scaleAndAdd(
-        Pool.malloc(),
+    vec2.scaleAndAdd(
+        newDestinationPoint,
         destinationPoint,
         slidePlaneNormal,
         -planeDistance
     )
 
     // generate slide vector. Becomes the new velocity vector in next iteration
-    const newVelocityVector = vec2.subtract(Pool.malloc(), newDestinationPoint, tmpContact.position)
+    vec2.subtract(newVelocityVector, newDestinationPoint, tmpContact.position)
 
     // dont recurse if the new velocity is very small
     if (vec2.length(newVelocityVector) < VERY_CLOSE_DISTANCE) {
@@ -135,10 +137,4 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
             collisionRecursionDepth + 1
         )
     }
-
-    Pool.free(destinationPoint)
-    Pool.free(slidePlaneNormal)
-    Pool.free(newDestinationPoint)
-    Pool.free(newVelocityVector)
-    Pool.free(newBasePoint)
 }
