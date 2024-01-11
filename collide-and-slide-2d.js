@@ -1,10 +1,10 @@
 import { vec2 }       from 'https://cdn.skypack.dev/pin/gl-matrix@v3.4.3-OSmwlRYK5GW1unkuAQkN/mode=imports,min/optimized/gl-matrix.js'
-import segmentsEllipsoid1Indexed from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d@f80cfca/src/segments-ellipsoid-sweep1-indexed.js'
-import contact        from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d@f80cfca/src/contact.js'
-import copyContact    from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d@f80cfca/src/contact-copy.js'
-import plane          from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d@f80cfca/src/plane.js'
+import segmentsEllipsoid1Indexed from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/segments-ellipsoid-sweep1-indexed.js'
+import contact        from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
+import copyContact    from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
+import plane          from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/plane.js'
 import sign           from 'https://cdn.jsdelivr.net/gh/mreinstein/math-gap/src/sign.js'
-import vec2SetLength  from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap@64af24d/set-length.js'
+import vec2SetLength  from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap/set-length.js'
 
 
 const VERY_CLOSE_DISTANCE = 0.005
