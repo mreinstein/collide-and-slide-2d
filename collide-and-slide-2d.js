@@ -4,7 +4,7 @@ import contact        from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/
 import copyContact    from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
 import plane          from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/plane.js'
 import sign           from 'https://cdn.jsdelivr.net/gh/mreinstein/math-gap/src/sign.js'
-import vec2SetLength  from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap/set-length.js'
+import vec2SetLength  from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap@944855f46277d12f9e7b79b394fe81415d92ca46/set-length.js'
 
 
 const VERY_CLOSE_DISTANCE = 0.005
