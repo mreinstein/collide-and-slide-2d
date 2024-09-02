@@ -1,7 +1,6 @@
 import Contact         from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
 import assert          from './_assert.js'
 import collideAndSlide from '../collide-and-slide-2d.js'
-import { vec2 }        from 'https://cdn.skypack.dev/pin/gl-matrix@v3.4.3-OSmwlRYK5GW1unkuAQkN/mode=imports,min/optimized/gl-matrix.js'
 
 
 const lines = [

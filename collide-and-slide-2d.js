@@ -1,4 +1,4 @@
-import { vec2 }       from 'https://cdn.skypack.dev/pin/gl-matrix@v3.4.3-OSmwlRYK5GW1unkuAQkN/mode=imports,min/optimized/gl-matrix.js'
+import { vec2 }        from 'https://wgpu-matrix.org/dist/3.x/wgpu-matrix.module.js'
 import segmentsEllipsoid1Indexed from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/segments-ellipsoid-sweep1-indexed.js'
 import contact        from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
 import copyContact    from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
@@ -44,8 +44,8 @@ export default function collideAndSlide (
     contact
 ) {
     // convert position and movement velocity from R3 to ellipsoid space
-    vec2.divide(eSpacePosition, position, ellipsoid)
-    vec2.divide(eSpaceVelocity, moveVel, ellipsoid)
+    vec2.divide(position, ellipsoid, eSpacePosition)
+    vec2.divide(moveVel, ellipsoid, eSpaceVelocity)
 
     // reset the contact object. null means no collision
     contact.collider = -1
@@ -54,12 +54,12 @@ export default function collideAndSlide (
     collideWithWorld(out, contact, lines, indices, lineCount, eSpacePosition, ellipsoid, eSpaceVelocity)
 
     // convert gravity velocity from R3 to ellipsoid space
-    vec2.divide(eSpaceVelocity, gravityVel, ellipsoid)
+    vec2.divide(gravityVel, ellipsoid, eSpaceVelocity)
 
     collideWithWorld(out, contact, lines, indices, lineCount, out, ellipsoid, eSpaceVelocity, MAX_RECURSION_DEPTH)
 
     // Convert final result back from ellipsoid space back to R3:
-    vec2.multiply(out, out, ellipsoid)
+    vec2.multiply(out, ellipsoid, out)
 
     return contact.collider >= 0
 }
@@ -67,7 +67,7 @@ export default function collideAndSlide (
 
 function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipsoid, vel, collisionRecursionDepth = 0) {
     if (vec2.length(vel) === 0 || collisionRecursionDepth > MAX_RECURSION_DEPTH) {
-        vec2.copy(out, pos)
+        vec2.copy(pos, out)
         return
     }
 
@@ -75,13 +75,13 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
 
     // no collision, move the full distance
     if (!segmentsEllipsoid1Indexed(lines, indices, lineCount, pos, ellipsoid, vel, tmpContact)) {
-        vec2.add(out, pos, vel)
+        vec2.add(pos, vel, out)
         return
     }
 
     // find the point of desired final location of the entity
-    vec2.add(destinationPoint, pos, vel)
-    vec2.copy(newBasePoint, pos)
+    vec2.add(pos, vel, destinationPoint)
+    vec2.copy(pos, newBasePoint)
 
     // only update if we are not already very close and if so, we only
     // move very close to the intersection, not the exact spot.
@@ -89,13 +89,13 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     if (movementDistance >= VERY_CLOSE_DISTANCE) {
         vec2SetLength(V, vel, movementDistance - VERY_CLOSE_DISTANCE)
 
-        vec2.add(newBasePoint, pos, V)
+        vec2.add(pos, V, newBasePoint)
 
         // adjust line intersection point (so sliding plane will be unaffected by the fact
         // that we move slightly less than the collision tells us)
         vec2.normalize(V, V)
-        vec2.scale(V, V, VERY_CLOSE_DISTANCE)
-        vec2.subtract(tmpContact.position, tmpContact.position, V)
+        vec2.scale(V, VERY_CLOSE_DISTANCE, V)
+        vec2.subtract(tmpContact.position, V, tmpContact.position)
     }
 
     copyContact(contact, tmpContact)
@@ -105,25 +105,25 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     // project the destination point onto the sliding plane
     const slidePlaneOrigin = tmpContact.position
 
-    vec2.subtract(slidePlaneNormal, newBasePoint, tmpContact.position)
+    vec2.subtract(newBasePoint, tmpContact.position, slidePlaneNormal)
     vec2.normalize(slidePlaneNormal, slidePlaneNormal)
 
     const slidingPlane = plane.fromPlane(plane.create(), slidePlaneOrigin, slidePlaneNormal)
     const planeDistance = plane.signedDistanceTo(slidingPlane, destinationPoint)
 
-    vec2.scaleAndAdd(
-        newDestinationPoint,
+    vec2.addScaled(
         destinationPoint,
         slidePlaneNormal,
-        -planeDistance
+        -planeDistance,
+        newDestinationPoint
     )
 
     // generate slide vector. Becomes the new velocity vector in next iteration
-    vec2.subtract(newVelocityVector, newDestinationPoint, tmpContact.position)
+    vec2.subtract(newDestinationPoint, tmpContact.position, newVelocityVector)
 
     // dont recurse if the new velocity is very small
     if (vec2.length(newVelocityVector) < VERY_CLOSE_DISTANCE) {
-        vec2.copy(out, newBasePoint)
+        vec2.copy(newBasePoint, out)
     } else {
         collideWithWorld(
             out,
