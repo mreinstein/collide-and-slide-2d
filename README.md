@@ -40,7 +40,7 @@ Three in particular are worth explaining a little more:
 ```javascript
 import collideAndSlide from 'https://cdn.jsdelivr.net/gh/mreinstein/collide-and-slide-2d/collide-and-slide.js'
 import contact         from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
-import * as vec2       from 'https://cdn.jsdelivr.net/npm/gl-matrix@3/esm/vec2.js'
+import { vec2 }        from 'https://wgpu-matrix.org/dist/3.x/wgpu-matrix.module.js'
 
 
 const lines = [

@@ -1,10 +1,10 @@
-import { vec2 }        from 'https://wgpu-matrix.org/dist/3.x/wgpu-matrix.module.js'
-import segmentsEllipsoid1Indexed from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/segments-ellipsoid-sweep1-indexed.js'
-import contact        from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
-import copyContact    from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
-import plane          from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/plane.js'
-import sign           from 'https://cdn.jsdelivr.net/gh/mreinstein/math-gap/src/sign.js'
-import vec2SetLength  from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap@944855f46277d12f9e7b79b394fe81415d92ca46/set-length.js'
+import segmentsEllipsoid from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/segments-ellipsoid-sweep1-indexed.js'
+import contact           from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
+import copyContact       from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
+import plane             from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/plane.js'
+import sign              from 'https://cdn.jsdelivr.net/gh/mreinstein/math-gap/src/sign.js'
+import vec2SetLength     from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap/set-length.js'
+import { vec2 }          from 'https://wgpu-matrix.org/dist/3.x/wgpu-matrix.module.js'
 
 
 const VERY_CLOSE_DISTANCE = 0.005
@@ -74,7 +74,7 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     // get nearest collision from line segments
 
     // no collision, move the full distance
-    if (!segmentsEllipsoid1Indexed(lines, indices, lineCount, pos, ellipsoid, vel, tmpContact)) {
+    if (!segmentsEllipsoid(lines, indices, lineCount, pos, ellipsoid, vel, tmpContact)) {
         vec2.add(pos, vel, out)
         return
     }
