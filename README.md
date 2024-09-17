@@ -100,4 +100,4 @@ console.log('new position:', out)
 
 This code is a re-implementation of Kasper Fauerby's incredible work: http://www.peroxide.dk/papers/collision/collision.pdf
 
-The matrix and vector operations are standardized on Gregg Tavares's wpgu matrix library: https://wgpu-matrix.org
+The matrix and vector operations are standardized on Gregg Tavares's library: https://wgpu-matrix.org
