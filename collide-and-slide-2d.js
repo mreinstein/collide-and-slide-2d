@@ -1,10 +1,7 @@
-import segmentsEllipsoid from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/segments-ellipsoid-sweep1-indexed.js'
-import contact           from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
-import copyContact       from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact-copy.js'
-import plane             from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/plane.js'
-import sign              from 'https://cdn.jsdelivr.net/gh/mreinstein/math-gap/src/sign.js'
-import vec2SetLength     from 'https://cdn.jsdelivr.net/gh/mreinstein/vec2-gap/set-length.js'
-import { vec2 }          from 'https://wgpu-matrix.org/dist/3.x/wgpu-matrix.module.js'
+import { sign }     from '@footgun/math-gap'
+import { vec2 }     from 'wgpu-matrix'
+import * as Vec2Gap from '@footgun/vec2-gap'
+import { contact, contactCopy, Plane, segsEllipsoidSweep1Indexed } from '@footgun/collision-2d'
 
 
 const VERY_CLOSE_DISTANCE = 0.005
@@ -74,7 +71,7 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     // get nearest collision from line segments
 
     // no collision, move the full distance
-    if (!segmentsEllipsoid(lines, indices, lineCount, pos, ellipsoid, vel, tmpContact)) {
+    if (!segsEllipsoidSweep1Indexed(lines, indices, lineCount, pos, ellipsoid, vel, tmpContact)) {
         vec2.add(pos, vel, out)
         return
     }
@@ -87,7 +84,7 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     // move very close to the intersection, not the exact spot.
     const movementDistance = vec2.length(vel) * tmpContact.time
     if (movementDistance >= VERY_CLOSE_DISTANCE) {
-        vec2SetLength(V, vel, movementDistance - VERY_CLOSE_DISTANCE)
+        Vec2Gap.setLength(V, vel, movementDistance - VERY_CLOSE_DISTANCE)
 
         vec2.add(pos, V, newBasePoint)
 
@@ -98,7 +95,7 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
         vec2.subtract(tmpContact.position, V, tmpContact.position)
     }
 
-    copyContact(contact, tmpContact)
+    contactCopy(contact, tmpContact)
 
     // determine the sliding plane
 
@@ -108,8 +105,8 @@ function collideWithWorld (out, contact, lines, indices, lineCount, pos, ellipso
     vec2.subtract(newBasePoint, tmpContact.position, slidePlaneNormal)
     vec2.normalize(slidePlaneNormal, slidePlaneNormal)
 
-    const slidingPlane = plane.fromPlane(plane.create(), slidePlaneOrigin, slidePlaneNormal)
-    const planeDistance = plane.signedDistanceTo(slidingPlane, destinationPoint)
+    const slidingPlane = Plane.fromPlane(Plane.create(), slidePlaneOrigin, slidePlaneNormal)
+    const planeDistance = Plane.signedDistanceTo(slidingPlane, destinationPoint)
 
     vec2.addScaled(
         destinationPoint,

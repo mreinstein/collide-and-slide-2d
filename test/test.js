@@ -1,6 +1,6 @@
-import Contact         from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
 import assert          from './_assert.js'
 import collideAndSlide from '../collide-and-slide-2d.js'
+import { contact }     from '@footgun/collision-2d'
 
 
 const lines = [
@@ -18,15 +18,15 @@ const moveVel  = [ 100, 0 ]
 
 const ellipsoid = [ 4, 7 ]
 
-const contact = Contact()
+const c = contact()
 
 const out = [0 , 0]
 
-const collision = collideAndSlide(out, lines, indices, lineCount, position, ellipsoid, moveVel, gravityVel, contact)
+const collision = collideAndSlide(out, lines, indices, lineCount, position, ellipsoid, moveVel, gravityVel, c)
 
 assert.equal(collision, true)
-assert.deepEqual(out, [ 498.9893493652344, 236.26020050048828 ])
-assert.deepEqual(contact.position, [ 125.13674926757812, 34.67463684082031 ])
-assert.deepEqual(contact.delta, [ -0, -14.283598400450344 ])
-assert.deepEqual(contact.normal, [ -0.3894166946411133, -0.9210616946220398 ])
-assert.equal(contact.time, 0.00014810243314507084)
+assert.deepEqual(out, [ 498.98931884765625,236.26009368896484 ])
+assert.deepEqual(c.position, [ 125.13674926757812, 34.67463684082031 ])
+assert.deepEqual(c.delta, [ 0,-14.28357982635498 ])
+assert.deepEqual(c.normal, [ -0.3894166946411133, -0.9210616946220398 ])
+assert.equal(c.time, 0.00014939633073836114)

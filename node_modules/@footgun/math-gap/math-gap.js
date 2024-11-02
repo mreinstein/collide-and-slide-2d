@@ -1,0 +1,7 @@
+export { default as clamp }     from './src/clamp.js'
+export { default as lerp }      from './src/lerp.js'
+export * as BitField            from './src/bitfield.js'
+export * as QuantizeAngle       from './src/quantize-angle.js'
+export { default as sign }      from './src/sign.js'
+export { default as toDegrees } from './src/to-degrees.js'
+export { default as toRadians } from './src/to-radians.js' 

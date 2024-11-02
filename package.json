@@ -1,0 +1,38 @@
+{
+  "name": "@footgun/collide-and-slide-2d",
+  "version": "0.1.0",
+  "description": "slide an ellipse/sphere along a series of line segments in 2d",
+  "main": "collide-and-slide-2d.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "prepublishOnly": "npm test",
+    "test": "node --test ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mreinstein/collide-and-slide-2d.git"
+  },
+  "keywords": [
+    "collision",
+    "response",
+    "ellipse",
+    "ellipsoid",
+    "2d",
+    "physics"
+  ],
+  "author": "Michael Reinstein",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mreinstein/collide-and-slide-2d/issues"
+  },
+  "homepage": "https://github.com/mreinstein/collide-and-slide-2d#readme",
+  "dependencies": {
+    "@footgun/collision-2d": "^0.1.0",
+    "@footgun/math-gap": "^0.1.0",
+    "@footgun/vec2-gap": "^0.1.0",
+    "wgpu-matrix": "^3.3.0"
+  }
+}
