@@ -38,9 +38,9 @@ Three in particular are worth explaining a little more:
 
 
 ```javascript
-import collideAndSlide from 'https://cdn.jsdelivr.net/gh/mreinstein/collide-and-slide-2d/collide-and-slide.js'
-import contact         from 'https://cdn.jsdelivr.net/gh/mreinstein/collision-2d/src/contact.js'
-import { vec2 }        from 'https://wgpu-matrix.org/dist/3.x/wgpu-matrix.module.js'
+import collideAndSlide from '@footgun/collide-and-slide-2d'
+import { contact }     from '@footgun/collision-2d'
+import { vec2 }        from 'wgpu-matrix'
 
 
 const lines = [
