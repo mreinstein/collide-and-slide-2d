@@ -1,4 +1,5 @@
 import assert          from './_assert.js'
+
 import collideAndSlide from '../collide-and-slide-2d.js'
 import { contact }     from '@footgun/collision-2d'
 

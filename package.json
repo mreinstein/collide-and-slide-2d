@@ -10,7 +10,7 @@
   "scripts": {
     "demo": "serve .",
     "prepublishOnly": "npm test",
-    "test": "node --test ./test"
+    "test": "node --test ./test/test.js"
   },
   "repository": {
     "type": "git",
