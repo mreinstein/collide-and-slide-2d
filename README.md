@@ -16,6 +16,8 @@ Lately I've been making some 2d platformers in javascript, and while there are p
 * is purely functional
 * consistent vector/matrix/line representation
 * is a pure es module
+* works in polar and cartesian coordinate systems
+* works in pixel and meter units
 
 So here we are.
 
@@ -29,7 +31,7 @@ To see a basic collide-and-slide usgage, run:
 
 ```bash
 npm run demo
-open http://localhost:3000
+open http://localhost:3000/example/
 ```
 
 This API may seem very odd at first glance, there are many arguments to this function.
