@@ -1,6 +1,6 @@
 {
   "name": "@footgun/collide-and-slide-2d",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "slide an ellipse/sphere along a series of line segments in 2d",
   "main": "collide-and-slide-2d.js",
   "type": "module",
@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "demo": "serve .",
     "prepublishOnly": "npm test",
     "test": "node --test ./test"
   },
@@ -30,7 +31,7 @@
   },
   "homepage": "https://github.com/mreinstein/collide-and-slide-2d#readme",
   "dependencies": {
-    "@footgun/collision-2d": "^0.1.0",
+    "@footgun/collision-2d": "^0.2.0",
     "@footgun/math-gap": "^0.1.0",
     "@footgun/vec2-gap": "^0.1.0",
     "wgpu-matrix": "^3.3.0"

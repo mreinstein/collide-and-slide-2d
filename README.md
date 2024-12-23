@@ -25,6 +25,13 @@ Note: this is a fairly high level collision response function. If you're looking
 
 ## usage
 
+To see a basic collide-and-slide usgage, run:
+
+```bash
+npm run demo
+open http://localhost:3000
+```
+
 This API may seem very odd at first glance, there are many arguments to this function.
 
 Three in particular are worth explaining a little more:
@@ -70,7 +77,7 @@ const position = vec2.fromValues(50, 200) // current position of ellipsoid (cent
 const ellipsoidRadius = [ 5, 10 ]         // the width and height radius of the ellipsoid
 const moveVel = vec2.fromValues(10, 0)    // the horizontal movement velocity is 10 right
 const gravityVel = vec2.fromValues(0, 6)  // the vertical (gravity) velocity is 6 down
-const contact = contact()                 // where the collision info is stored
+const tmpContact = contact()                 // where the collision info is stored
 
 // returns a boolean indicating if any collision happend or not
 const collided = collideAndSlide(
@@ -82,11 +89,11 @@ const collided = collideAndSlide(
     ellipsoidRadius,
     moveVel,
     gravityVel,
-    contact
+    tmpContact
 )
 
 if (collided)
-	console.log('collision occurred. contact details:', contact)
+	console.log('collision occurred. contact details:', tmpContact)
 
 // if no collision the entity is moved the full distance specified by gravity and move velocities.
 // if collision, it will move and slide along any lines included in the lines list.
