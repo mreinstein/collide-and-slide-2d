@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/mreinstein/collide-and-slide-2d#readme",
   "dependencies": {
-    "@footgun/collision-2d": "^0.2.0",
-    "@footgun/math-gap": "^0.1.0",
-    "@footgun/vec2-gap": "^0.1.0",
+    "@footgun/collision-2d": "^0.5.0",
+    "@footgun/math-gap": "^0.2.0",
+    "@footgun/vec2-gap": "^0.3.0",
     "wgpu-matrix": "^3.3.0"
   }
 }
