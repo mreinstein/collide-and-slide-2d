@@ -1,3 +1,7 @@
+# 0.3.0
+* update deps
+
+
 # 0.2.0
 * add a runnable demo
 
