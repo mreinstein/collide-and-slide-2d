@@ -1,80 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title class="titleText">Collide and Slide 2D Test</title>
-        <meta name="description" content="Provides a demonstration of collide-and-slide-2d" />
-        <meta name="author" content="Michael Reinstein" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
 
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes" />
+<head>
+    <meta charset="UTF-8" />
+    <title class="titleText">Collide and Slide 2D Test</title>
+    <meta name="description" content="Provides a demonstration of collide-and-slide-2d" />
+    <meta name="author" content="Michael Reinstein" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
 
-        <style>
-            * {
-                font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
-                    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
-                    sans-serif;
-            }
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
 
-            body {
-                background-color: #fafafa;
-                padding: 0;
-                margin: 20px;
-                transition: opacity 0.27s;
-                overscroll-behavior: none;
-            }
+    <style>
+        * {
+            font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
+                'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
+                sans-serif;
+        }
 
-            body, img, canvas {
-                image-rendering: pixelated;
-            }
+        body {
+            background-color: #fafafa;
+            padding: 0;
+            margin: 20px;
+            transition: opacity 0.27s;
+            overscroll-behavior: none;
+        }
 
-            canvas {
-                width: 320px;
-                height: 320px;
-                background-color: #333;
-            }
+        body,
+        img,
+        canvas {
+            image-rendering: pixelated;
+        }
 
-        </style>
-    </head>
+        canvas {
+            width: 320px;
+            height: 320px;
+            background-color: #333;
+        }
+    </style>
+</head>
 
-    <body>
-        <h1> Basic Collide and Slide Test </h1>
+<body>
+    <h1> Basic Collide and Slide Test </h1>
 
-        <canvas width="320" height="320"> </canvas>
+    <canvas width="320" height="320"> </canvas>
 
-        <p> <strong>E</strong> and <strong>F</strong> to walk. </p>
-        <p> <strong>space bar</strong> to jump </p>
+    <p> <strong>E</strong> and <strong>F</strong> to walk. </p>
+    <p> <strong>space bar</strong> to jump </p>
 
-        <script type="importmap">
+    <script type="importmap">
           {
             "imports": {
               "@footgun/collide-and-slide-2d": "../collide-and-slide-2d.js",
-              "@footgun/collision-2d": "https://cdn.skypack.dev/@footgun/collision-2d",
-              "@footgun/input-web": "https://cdn.skypack.dev/@footgun/input-web",
-              "@footgun/math-gap": "https://cdn.skypack.dev/@footgun/math-gap",
-              "@footgun/vec2-gap": "https://cdn.skypack.dev/@footgun/vec2-gap",
-              "clamp": "https://cdn.skypack.dev/clamp",
-              "ecs": "https://cdn.skypack.dev/ecs",
-              "wgpu-matrix": "https://cdn.skypack.dev/wgpu-matrix"
+              "@footgun/collision-2d": "https://esm.sh/@footgun/collision-2d",
+              "@footgun/input-web": "https://esm.sh/@footgun/input-web",
+              "@footgun/math-gap": "https://esm.sh/@footgun/math-gap",
+              "@footgun/vec2-gap": "https://esm.sh/@footgun/vec2-gap",
+              "clamp": "https://esm.sh/clamp",
+              "ecs": "https://esm.sh/ecs",
+              "wgpu-matrix": "https://esm.sh/wgpu-matrix"
             }
           }
         </script>
-    
-        <script type="module">
-        import ECS             from 'ecs'
-        import Global          from './Global.js'
-        import Input           from './Input.js'
+
+    <script type="module">
+        import ECS from 'ecs'
+        import Global from './Global.js'
+        import Input from './Input.js'
         import rigidBodySystem from './system-rigidbody.js'
-        import rendererSystem  from './system-renderer.js'
-        import moverEntity     from './entity-mover.js'
+        import rendererSystem from './system-renderer.js'
+        import moverEntity from './entity-mover.js'
 
         const FPS = 60
         const FIXED_STEP_MS = 1000 / FPS
 
 
-        async function main () {
+        async function main() {
 
             const raw = await fetch('./many-slopes.clm')
             const m = await raw.json()
@@ -93,9 +95,9 @@
         }
 
 
-        function gameLoop () {
+        function gameLoop() {
             requestAnimationFrame(gameLoop)
-            
+
             const newTime = performance.now()
             let frameTime = newTime - Global.lastFrameTime
             Global.lastFrameTime = newTime
@@ -122,6 +124,7 @@
 
         main()
 
-        </script>
-    </body>
+    </script>
+</body>
+
 </html>

@@ -1,3 +1,7 @@
+# 0.3.1
+* update deps, switch from skypack to esm.sh for demo page
+
+
 # 0.3.0
 * update deps
 
